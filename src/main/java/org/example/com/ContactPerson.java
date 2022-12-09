@@ -1,3 +1,5 @@
+package org.example.com;
+
 public class ContactPerson implements Comparable {
     private String firstName;
     private String lastName;
@@ -106,4 +108,3 @@ public class ContactPerson implements Comparable {
         return this.getFirstName().compareTo(person.getFirstName());
     }
 }
-
