@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AddressBookMain {
-    static ArrayList<Contact> AddressBook=new ArrayList();
+    static ArrayList <Contact> AddressBook=new ArrayList();
     static Scanner scanner=new Scanner(System.in);
     public static void main(String[] args) {
         System.out.println("Welcome to AddressBook System Program");
@@ -10,12 +10,8 @@ public class AddressBookMain {
         AddressBookMain addressBook=new AddressBookMain();
         Contact contact=addressBook.createContact();
         addressBook.addContact(contact);
-        System.out.println(contact);
-
-        System.out.println("Enter Name to edit Contact");
-        String name=scanner.next();
-        addressBook.editContact(name);
-        System.out.println(contact);
+        addressBook.editContact();
+        addressBook.deleteContact();
     }
 
     Contact createContact(){
@@ -45,7 +41,9 @@ public class AddressBookMain {
         AddressBook.add(contact);
         System.out.println("Contact added to AddressBook");
     }
-    void editContact(String name){
+    void editContact(){
+        System.out.println("Enter Name to edit Contact");
+        String name=scanner.next();
         for (Contact contact : AddressBook){
             if (contact.firstName.equalsIgnoreCase(name)) {
                 System.out.println("Enter first name");
@@ -64,7 +62,20 @@ public class AddressBookMain {
                 contact.phoneNumber=scanner.nextLong();
                 System.out.println("Enter Email");
                 contact.email=scanner.next();
-                System.out.println("Contact Updated successfully.");
+                System.out.println("Contact Updated Successfully.");
+                System.out.println(contact);
+                break;
+            }
+        }
+    }
+
+    void deleteContact(){
+        System.out.println("Enter Name to delete Contact");
+        String name=scanner.next();
+        for (Contact contact : AddressBook){
+            if (contact.firstName.equalsIgnoreCase(name)) {
+                AddressBook.remove(contact);
+                System.out.println("Contact Deleted Successfully");
                 break;
             }
         }
