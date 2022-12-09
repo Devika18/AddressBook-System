@@ -3,11 +3,11 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class AddressBook {
-    static HashMap<String, ArrayList> addressBookList = new HashMap<String, ArrayList>();
+    static HashMap<String, ArrayList<ContactPerson>> addressBookList = new HashMap<>();
     static ArrayList<ContactPerson> currentAddressBook;
     static String currentAddressBookName;
-    static HashMap<String, ContactPerson> cityContactList = new HashMap<>();
-    static HashMap<String, ContactPerson> stateContactList = new HashMap<>();
+    static HashMap<String, ArrayList<ContactPerson>> cityContactList = new HashMap<>();
+    static HashMap<String, ArrayList<ContactPerson>> stateContactList = new HashMap<>();
 
     static Scanner scanner = new Scanner(System.in);
 
@@ -40,8 +40,31 @@ public class AddressBook {
             System.out.println("Contact name already exists");
         } else {
             currentAddressBook.add(person);
-            cityContactList.put(person.getCity(),person);
-            stateContactList.put(person.getState(),person);
+
+            //add to city contact list
+            String city = person.getCity();
+            ArrayList<ContactPerson> list;
+            if (cityContactList.containsKey(city)) {
+                list = cityContactList.get(city);
+                list.add(person);
+
+            } else {
+                list = new ArrayList<>();
+                list.add(person);
+                cityContactList.put(city, list);
+            }
+
+            //add to State contact list
+            String state= person.getState();
+            if (stateContactList.containsKey(state)) {
+                list = stateContactList.get(state);
+                list.add(person);
+
+            } else {
+                list = new ArrayList<>();
+                list.add(person);
+                stateContactList.put(state, list);
+            }
             System.out.println("contact added to AddressBook " + currentAddressBookName);
             System.out.println(person);
         }
@@ -76,25 +99,21 @@ public class AddressBook {
     }
 
     void deleteContact() {
-        boolean isContactFound = false;
         System.out.println("enter name to delete contact");
         String name = scanner.next();
         for (ContactPerson contact : currentAddressBook) {
             if (contact.getFirstName().equalsIgnoreCase(name)) {
                 System.out.println("contact found:");
-                isContactFound = true;
                 System.out.println(contact);
                 System.out.println("confirm to delete (y/n)");
                 if (scanner.next().equalsIgnoreCase("y")) {
                     currentAddressBook.remove(contact);
                     System.out.println("contact deleted");
                 }
-                break;
+                return;
             }
         }
-        if (isContactFound == false) {
-            System.out.println("Opps... contact not found");
-        }
+        System.out.println("Opps... contact not found");
     }
 
     void addNewAddressBook() {
@@ -141,7 +160,7 @@ public class AddressBook {
         System.out.println("Enter City:");
         String city = scanner.next();
         for (String key : cityContactList.keySet()) {
-            if (key.equalsIgnoreCase(city)){
+            if (key.equalsIgnoreCase(city)) {
                 System.out.println(cityContactList.get(city));
             }
         }
@@ -151,7 +170,7 @@ public class AddressBook {
         System.out.println("Enter State:");
         String state = scanner.next();
         for (String key : stateContactList.keySet()) {
-            if (key.equalsIgnoreCase(state)){
+            if (key.equalsIgnoreCase(state)) {
                 System.out.println(stateContactList.get(state));
             }
         }
@@ -162,7 +181,7 @@ public class AddressBook {
     }
 
     void searchContact() {
-        System.out.println("1. Search by City \n2.Search by State");
+        System.out.println("1.Search by City \n2.Search by State");
         int option = scanner.nextInt();
         switch (option) {
             case 1:
@@ -182,24 +201,40 @@ public class AddressBook {
     void searchByCity(String city) {
         System.out.println("Search Result: ");
         for (String addressBookName : addressBookList.keySet()) {
-            for (Object p : addressBookList.get(addressBookName)) {
-                ContactPerson person = (ContactPerson) p;
-                if (person.getCity().equalsIgnoreCase(city)) {
+            addressBookList.get(addressBookName).forEach((person) -> {
+                if (person.getCity().equalsIgnoreCase(city))
                     System.out.println(person);
-                }
-            }
+            });
         }
     }
 
     void searchByState(String state) {
         System.out.println("Search Result: ");
         for (String addressBookName : addressBookList.keySet()) {
-            for (Object p : addressBookList.get(addressBookName)) {
-                ContactPerson person = (ContactPerson) p;
-                if (person.getState().equalsIgnoreCase(state)) {
+            addressBookList.get(addressBookName).forEach((person)->{
+                if (person.getState().equalsIgnoreCase(state))
                     System.out.println(person);
-                }
-            }
+            });
+        }
+    }
+
+    void showContactCount() {
+        System.out.println("1.Count of City \n2.Count of State");
+        int option = scanner.nextInt();
+        switch (option) {
+            case 1:
+                System.out.println("Enter city :");
+                String city = scanner.next();
+                System.out.println("Count: " + cityContactList.get(city).size());
+                break;
+            case 2:
+                System.out.println("Enter State :");
+                String state = scanner.next();
+                System.out.println("Count: " + stateContactList.get(state).size());
+                break;
+            default:
+                showContactCount();
+                break;
         }
     }
 }
