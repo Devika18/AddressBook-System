@@ -22,7 +22,8 @@ public class AddressBookMain {
                     "6.Select AddressBook \n" +
                     "7.Search Contact \n" +
                     "8.Show number of Contact \n" +
-                    "9.Exit");
+                    "9.Sort Contacts \n" +
+                    "10.Exit");
             int option = scanner.nextInt();
             switch (option) {
                 case 1:
@@ -51,6 +52,9 @@ public class AddressBookMain {
                     addressBook.showContactCount();
                     break;
                 case 9:
+                    addressBook.sortContact();
+                    break;
+                case 10:
                     flag1 = false;
                     break;
                 default:

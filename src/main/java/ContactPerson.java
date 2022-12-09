@@ -99,5 +99,11 @@ public class ContactPerson {
                 ", email='" + email + '\'' +
                 '}';
     }
+
+    @Override
+    public int compareTo(Object o) {
+        ContactPerson person= (ContactPerson) o;
+        return this.getFirstName().compareTo(person.getFirstName());
+    }
 }
 

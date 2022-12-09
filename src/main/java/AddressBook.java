@@ -55,7 +55,7 @@ public class AddressBook {
             }
 
             //add to State contact list
-            String state= person.getState();
+            String state = person.getState();
             if (stateContactList.containsKey(state)) {
                 list = stateContactList.get(state);
                 list.add(person);
@@ -161,7 +161,7 @@ public class AddressBook {
         String city = scanner.next();
         for (String key : cityContactList.keySet()) {
             if (key.equalsIgnoreCase(city)) {
-                System.out.println(cityContactList.get(city));
+                stateContactList.get(city).stream().forEach(person -> System.out.println(person));
             }
         }
     }
@@ -171,7 +171,7 @@ public class AddressBook {
         String state = scanner.next();
         for (String key : stateContactList.keySet()) {
             if (key.equalsIgnoreCase(state)) {
-                System.out.println(stateContactList.get(state));
+                stateContactList.get(state).stream().forEach(person -> System.out.println(person));
             }
         }
     }
@@ -211,7 +211,7 @@ public class AddressBook {
     void searchByState(String state) {
         System.out.println("Search Result: ");
         for (String addressBookName : addressBookList.keySet()) {
-            addressBookList.get(addressBookName).forEach((person)->{
+            addressBookList.get(addressBookName).forEach((person) -> {
                 if (person.getState().equalsIgnoreCase(state))
                     System.out.println(person);
             });
@@ -236,5 +236,10 @@ public class AddressBook {
                 showContactCount();
                 break;
         }
+    }
+
+    void sortContact() {
+        List<ContactPerson> list = currentAddressBook.stream().sorted().collect(Collectors.toList());
+        list.stream().forEach(person -> System.out.println(person));
     }
 }
