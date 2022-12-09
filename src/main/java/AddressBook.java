@@ -277,5 +277,15 @@ public class AddressBook {
         }
         return allContacts;
     }
+
+    void readAddressBook() throws FileNotFoundException {
+        FileIO.read();
+    }
+
+    void writeAddressBook() throws IOException {
+        for (String key: addressBookList.keySet()) {
+            FileIO.write(addressBookList.get(key),key);
+        }
+    }
 }
 
