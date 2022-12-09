@@ -102,7 +102,7 @@ public class ContactPerson implements Comparable {
 
     @Override
     public int compareTo(Object o) {
-        ContactPerson person= (ContactPerson) o;
+        ContactPerson person = (ContactPerson) o;
         return this.getFirstName().compareTo(person.getFirstName());
     }
 }
