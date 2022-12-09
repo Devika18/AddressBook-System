@@ -11,7 +11,7 @@ public class AddressBookMain {
 
         boolean flag1=true;
         while (flag1){
-            System.out.println("*************\n"+AddressBook.AddressBookList.keySet());
+            System.out.println("*************\n"+AddressBook.addressBookList.keySet());
             System.out.println("current AddressBook Name: "+addressBook.currentAddressBookName);
             System.out.println("Select option: \n" +
                     "1.Add Contact \n" +
@@ -20,7 +20,8 @@ public class AddressBookMain {
                     "4.Delete Contact \n" +
                     "5.Add New AddressBook \n" +
                     "6.Select AddressBook \n" +
-                    "7.Exit");
+                    "7.Search Contact \n" +
+                    "8.Exit");
             int option=scanner.nextInt();
             switch (option){
                 case 1:
@@ -43,6 +44,9 @@ public class AddressBookMain {
                     addressBook.selectAddressBook();
                     break;
                 case 7:
+                    addressBook.searchContact();
+                    break;
+                case 8:
                     flag1=false;
                     break;
                 default:
