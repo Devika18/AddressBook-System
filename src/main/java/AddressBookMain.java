@@ -1,14 +1,15 @@
 import java.util.Scanner;
 
 public class AddressBookMain {
-    Contact contact;
+    static int contactID;
+    static Contact AddressBook[]=new Contact[10];
 
     public static void main(String[] args) {
         System.out.println("Welcome to AddressBook System Program");
 
         AddressBookMain addressBook=new AddressBookMain();
         Contact contact1=addressBook.createContact();
-
+        addressBook.addContact(contact1);
         System.out.println(contact1);
     }
 
@@ -31,8 +32,13 @@ public class AddressBookMain {
         System.out.println("Enter Email");
         String email=scanner.next();
 
-        System.out.println("Created New Contact Successfully\n");
         Contact contact=new Contact(firstName,lastName,address,city,state,zipCode,phoneNumber,email);
+        System.out.println("Created New Contact Successfully");
         return contact;
+    }
+
+    void addContact(Contact contact){
+        AddressBook[contactID++]=contact;
+        System.out.println("Contact added to AddressBook");
     }
 }
