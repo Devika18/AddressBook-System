@@ -1,4 +1,4 @@
-public class ContactPerson {
+public class ContactPerson implements Comparable {
     private String firstName;
     private String lastName;
     private String address;
